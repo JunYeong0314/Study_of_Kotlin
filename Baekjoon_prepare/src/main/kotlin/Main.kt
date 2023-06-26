@@ -5,20 +5,18 @@ import java.util.Collections
 import java.util.LinkedList
 
 fun main(args: Array<String>) {
-    val br = BufferedReader(InputStreamReader(System.`in`))
-    val n = br.readLine()?.toInt() ?: return
-    val sb = StringBuilder()
-    val numList = mutableListOf<Int>()
+    var n = readLine()?.toInt() ?: return
+    n -= 1
+    var first = 666
 
-    for(i in 0 until n){
-        numList.add(br.readLine()?.toInt() ?: return)
+    while(n != 0){
+        first += 1
+        if(first.toString().contains("666")){
+            n -= 1
+        }
     }
 
-    Collections.sort(numList)
-    for(i in numList){
-        sb.append(i).append('\n')
-    }
+    print("$first")
 
-    print(sb)
 
 }
