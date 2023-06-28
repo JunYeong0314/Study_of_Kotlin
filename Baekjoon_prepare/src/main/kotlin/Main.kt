@@ -1,22 +1,51 @@
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.lang.StringBuilder
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
+import java.util.StringTokenizer
 
+lateinit var connected: Array<ArrayList<Int>>
+lateinit var visited: Array<Int>
+val sb = StringBuilder()
+var cnt = 1
 
-fun main(args: Array<String>) {
-    val (N, M, R) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+fun main() = with(System.`in`.bufferedReader()) {
+    val (n, m, r) = readLine().split(" ").map { it.toInt() }
 
-    val g = Graph(N)
-    for(i in 0 until M){
-        val (u, v) = readLine()?.split(" ")?.map { it.toInt() } ?: return
-        g.addEdge(u, v)
+    connected = Array(n + 1) { ArrayList() }
+    visited = Array(n + 1) { 0 }
+
+    repeat(m) {
+        val st = StringTokenizer(readLine())
+        val (v1, v2) = Array(2) { st.nextToken().toInt() }
+        connected[v1].add(v2)
+        connected[v2].add(v1)
     }
-    g.DFS(R)
 
-    for(i in 1..N){
-        if(!g.getVisited()[i]){
-            println(0)
+    connected.forEach { it.sort() }
+    //connected.forEach { it.reverse() }
+
+    BFS(r)
+
+    for (i in 1..n) {
+        sb.append(visited[i]).append("\n")
+    }
+
+    print(sb)
+}
+
+fun BFS(s : Int){
+    val q : Queue<Int> = LinkedList()
+    q.offer(s)
+
+    while(!q.isEmpty()){
+        var now = q.poll()
+        if(visited[now] == 0) visited[now] = cnt++
+
+        connected[now].forEach { value ->
+            if(visited[value] == 0){
+                visited[value] = cnt++
+                q.offer(value)
+            }
         }
     }
+
 }
