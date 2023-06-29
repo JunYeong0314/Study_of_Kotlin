@@ -1,50 +1,76 @@
 import java.util.LinkedList
 import java.util.Queue
+import java.util.Scanner
 import java.util.StringTokenizer
 import kotlin.properties.Delegates
 
-lateinit var connected: Array<ArrayList<Int>>
+lateinit var connected: Array<Array<Int>>
 lateinit var dfsVisited: Array<Boolean>
+lateinit var visited: Array<Array<Boolean>>
+lateinit var apart: Array<Int>
+val dx = arrayOf(0, 0, 1, -1)
+val dy = arrayOf(1, -1, 0, 0)
+var appartNum = 0
+var N = 0
+
 
 fun main() {
-    var (N, M, S) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+    N = readLine()?.toInt() ?: return
+    val scanner = Scanner(System.`in`)
+    connected = Array(N){ Array(N) { 0 } }
+    visited = Array(N){ Array(N) { false } }
+    apart = Array(N*N){ 0 }
 
-    connected = Array(N+1){ ArrayList() }
-    dfsVisited = Array(N+1){ false }
-
-    for(i in 0 until M){
-        val (u, v) = readLine()?.split(" ")?.map { it.toInt() } ?: return
-        connected[u].add(v)
-        connected[v].add(u)
+    for(i in 0 until N){
+        val input = readLine()
+        for(j in 0 until N){
+            connected[i][j] = input?.get(j)?.toString()?.toInt() ?: 0
+        }
     }
 
-    connected.forEach { it.sort() }
+    for(i in 0 until N){
+        for(j in 0 until N){
+            if(connected[i][j] == 1 && !visited[i][j]){
+                appartNum++
+                BFS(i, j)
+            }
+        }
+    }
 
-    DFS(S)
-    println()
-    BFS(S, N)
+    apart.sort()
+    println("$appartNum")
+
+    apart.forEach { v->
+        if(v != 0) println(v)
+    }
+
 }
 
-fun BFS(s : Int, N : Int){
-    val visited = Array(N+1){ false }
-
-    val q : Queue<Int> = LinkedList()
-    visited[s] = true
-    q.offer(s)
+fun BFS(x : Int, y : Int){
+    val q: Queue<IntArray> = LinkedList()
+    q.add(intArrayOf(x, y))
+    visited[x][y] = true
+    apart[appartNum]++
 
     while(!q.isEmpty()){
-        val now = q.poll()
-        print("$now ")
+        val curX = q.peek()[0]
+        val curY = q.peek()[1]
+        q.poll()
 
-        connected[now].forEach { value ->
-            if(!visited[value]){
-                visited[value] = true
-                q.offer(value)
+        for(i in 0 until 4){
+            val nx = curX + dx[i]
+            val ny = curY + dy[i]
+
+            if(nx >= 0 && ny >= 0 && nx < N && ny < N){
+                if(connected[nx][ny] == 1 && !visited[nx][ny]){
+                    q.add(intArrayOf(nx, ny))
+                    visited[nx][ny] = true
+                    apart[appartNum]++
+                }
             }
         }
     }
 }
-
 fun DFS(s : Int){
     if(dfsVisited[s]) return
     dfsVisited[s] = true
