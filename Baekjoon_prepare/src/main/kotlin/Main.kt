@@ -1,51 +1,57 @@
 import java.util.LinkedList
 import java.util.Queue
 import java.util.StringTokenizer
+import kotlin.properties.Delegates
 
 lateinit var connected: Array<ArrayList<Int>>
-lateinit var visited: Array<Int>
-val sb = StringBuilder()
-var cnt = 1
+lateinit var dfsVisited: Array<Boolean>
 
-fun main() = with(System.`in`.bufferedReader()) {
-    val (n, m, r) = readLine().split(" ").map { it.toInt() }
+fun main() {
+    var (N, M, S) = readLine()?.split(" ")?.map { it.toInt() } ?: return
 
-    connected = Array(n + 1) { ArrayList() }
-    visited = Array(n + 1) { 0 }
+    connected = Array(N+1){ ArrayList() }
+    dfsVisited = Array(N+1){ false }
 
-    repeat(m) {
-        val st = StringTokenizer(readLine())
-        val (v1, v2) = Array(2) { st.nextToken().toInt() }
-        connected[v1].add(v2)
-        connected[v2].add(v1)
+    for(i in 0 until M){
+        val (u, v) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+        connected[u].add(v)
+        connected[v].add(u)
     }
 
     connected.forEach { it.sort() }
-    //connected.forEach { it.reverse() }
 
-    BFS(r)
-
-    for (i in 1..n) {
-        sb.append(visited[i]).append("\n")
-    }
-
-    print(sb)
+    DFS(S)
+    println()
+    BFS(S, N)
 }
 
-fun BFS(s : Int){
+fun BFS(s : Int, N : Int){
+    val visited = Array(N+1){ false }
+
     val q : Queue<Int> = LinkedList()
+    visited[s] = true
     q.offer(s)
 
     while(!q.isEmpty()){
-        var now = q.poll()
-        if(visited[now] == 0) visited[now] = cnt++
+        val now = q.poll()
+        print("$now ")
 
         connected[now].forEach { value ->
-            if(visited[value] == 0){
-                visited[value] = cnt++
+            if(!visited[value]){
+                visited[value] = true
                 q.offer(value)
             }
         }
+    }
+}
+
+fun DFS(s : Int){
+    if(dfsVisited[s]) return
+    dfsVisited[s] = true
+    print("$s ")
+
+    connected[s].forEach { next->
+        DFS(next)
     }
 
 }
