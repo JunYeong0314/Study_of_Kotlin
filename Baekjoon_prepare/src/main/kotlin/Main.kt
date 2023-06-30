@@ -1,62 +1,70 @@
 import java.util.LinkedList
 import java.util.Queue
 
+data class Point(val row: Int, val col: Int)
+
 lateinit var visited: Array<Array<Boolean>>
 lateinit var farm : Array<Array<Int>>
-lateinit var numArr : Array<Int>
+lateinit var maze : Array<Array<Int>>
 val dCol = arrayOf(0, 0, 1, -1) // Same left and right
 val dRow = arrayOf(1, -1, 0, 0) // Same up and down
 
 
 fun main() {
-    val T = readLine()?.toInt() ?: return // Number of iterations
-    numArr = Array(T) { 0 } // Counter of bug number
+    val (row, col) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+    maze = Array(row){Array(col) {0}}
+    visited = Array(row){Array(col) {false} }
 
-    for(i in 0 until T){
-        val (M, N, K) = readLine()?.split(" ")?.map { it.toInt() } ?: return // Input number of horizontal, veltical and cabbage
-        farm = Array(N){Array(M) { 0 }}
-        visited = Array(N){Array(M) { false } }
-        for(j in 0 until K){
-            val (col, row) = readLine()?.split(" ")?.map { it.toInt() } ?: return // Input of cabbage location
-            farm[row][col] = 1
-        }
-
-        for(k in 0 until N){
-            for(l in 0 until M){
-                if(farm[k][l] == 1 && !visited[k][l]){
-                    BFS(l, k, M, N, i)
-                }
-            }
+    for(i in 0 until row){
+        val input = readLine()
+        for(j in 0 until col){
+            maze[i][j] = input?.substring(j, j+1)?.toInt() ?: 0
         }
     }
 
-    numArr.forEach { v->
-        println(v)
+    val shortPathLength = BFS(Point(0, 0), Point(row-1, col-1))
+    if(shortPathLength != -1){
+        println(shortPathLength)
+    }else{
+        println("ERROR")
     }
 
 }
 
-fun BFS(col : Int, row : Int, M : Int, N : Int, index : Int){
-    visited[row][col] = true
-    val q : Queue<IntArray> = LinkedList()
-    q.add(intArrayOf(row, col))
+fun BFS(start: Point, end: Point): Int{
+    val queue: Queue<Point> = LinkedList()
+    queue.offer(start)
+    visited[start.row][start.col] = true
 
-    while(!q.isEmpty()){
-        val curCol = q.peek()[1] // Current horizontal location
-        val curRow = q.peek()[0] // Current vertical location
-        q.poll()
+    var pathLength = 1
 
-        for(i in 0 until 4){
-            val nCol = curCol + dCol[i] // Horizontal adjacency
-            val nRow = curRow + dRow[i] // Vertical adjacency
+    while(queue.isNotEmpty()){
+        val size = queue.size
 
-            if(nCol >= 0 && nRow >= 0 && nCol < M && nRow < N){
-                if(farm[nRow][nCol] == 1 && !visited[nRow][nCol]){
-                    q.add(intArrayOf(nRow, nCol))
-                    visited[nRow][nCol] = true
+        for(i in 0 until size){
+            val current = queue.poll()
+
+            if(current == end){
+                return pathLength
+            }
+
+            for(j in 0 until 4){
+                val newRow = current.row + dRow[j]
+                val newCol = current.col + dCol[j]
+
+                if(isValidMove(newRow, newCol) && !visited[newRow][newCol]){
+                    queue.offer(Point(newRow, newCol))
+                    visited[newRow][newCol] = true
                 }
             }
         }
+        pathLength++
     }
-    numArr[index]++
+    return -1
+}
+
+fun isValidMove(row: Int, col: Int): Boolean{
+    val rowSize = maze.size
+    val colSize = maze[0].size
+    return row in 0 until rowSize && col in 0 until colSize && maze[row][col] != 0
 }
