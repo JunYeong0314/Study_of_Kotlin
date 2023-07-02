@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
             val oauthLoginCallback = object : OAuthLoginCallback{
                 override fun onSuccess() {
                     val intent = Intent(this@MainActivity, FirstActivity::class.java)
-
+                    val sharedPreferenceManager = SharedPreferenceManager.getInstance(this@MainActivity)
+                    sharedPreferenceManager.saveToken(NaverIdLoginSDK.getAccessToken() ?: "")
 
                     NidOAuthLogin().callProfileApi(object: NidProfileCallback<NidProfileResponse>{
                         override fun onError(errorCode: Int, message: String) {
