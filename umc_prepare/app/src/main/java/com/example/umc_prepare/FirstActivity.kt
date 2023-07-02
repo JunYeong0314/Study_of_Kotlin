@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.umc_prepare.databinding.ActivityFirstBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.greenrobot.eventbus.EventBus
 
 class FirstActivity: AppCompatActivity() {
     private val binding: ActivityFirstBinding by lazy{
@@ -18,17 +19,22 @@ class FirstActivity: AppCompatActivity() {
         val mainVPAdapter = MainVPAdapter(this)
         binding.vpMain.adapter = mainVPAdapter
 
-        changeFragment(HomeFragment()) // 첫 화면 fragment
+
         binding.navBottom.setOnItemSelectedListener { item->
             when(item.itemId){
                 R.id.menu_list -> {
-                    changeFragment(ListFragment())
+                    binding.vpMain.currentItem = 0
                 }
                 R.id.menu_home -> {
-                    changeFragment(HomeFragment())
+                    binding.vpMain.currentItem = 1
                 }
                 R.id.menu_mypage -> {
-                    changeFragment(MypageFragment())
+                    EventBus.getDefault().post(Profile(
+                        intent.getStringExtra("name")?:"null",
+                        intent.getStringExtra("gender")?:"null",
+                        intent.getStringExtra("age")?:"null"
+                    ))
+                    binding.vpMain.currentItem = 2
                 }
             }
             true
@@ -36,10 +42,15 @@ class FirstActivity: AppCompatActivity() {
 
         binding.vpMain.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
-                when(position){
-                    0 -> binding.navBottom.selectedItemId = R.id.menu_list
-                    1 -> binding.navBottom.selectedItemId = R.id.menu_home
-                    2 -> binding.navBottom.selectedItemId = R.id.menu_mypage
+                if(position == 2){
+                    EventBus.getDefault().post(Profile(
+                        intent.getStringExtra("name")?:"null",
+                        intent.getStringExtra("gender")?:"null",
+                        intent.getStringExtra("age")?:"null"
+                    ))
+                    binding.navBottom.menu.getItem(position).isChecked = true
+                }else{
+                    binding.navBottom.menu.getItem(position).isChecked = true
                 }
             }
         })

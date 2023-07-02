@@ -10,6 +10,7 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import org.greenrobot.eventbus.EventBus
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy{
@@ -23,11 +24,7 @@ class MainActivity : AppCompatActivity() {
             val oauthLoginCallback = object : OAuthLoginCallback{
                 override fun onSuccess() {
                     val intent = Intent(this@MainActivity, FirstActivity::class.java)
-                    intent.putExtra("token", NaverIdLoginSDK.getAccessToken())
-                    intent.putExtra("refreshToken", NaverIdLoginSDK.getRefreshToken())
-                    intent.putExtra("expires", NaverIdLoginSDK.getExpiresAt().toString())
-                    intent.putExtra("type", NaverIdLoginSDK.getTokenType())
-                    intent.putExtra("state", NaverIdLoginSDK.getState().toString())
+
 
                     NidOAuthLogin().callProfileApi(object: NidProfileCallback<NidProfileResponse>{
                         override fun onError(errorCode: Int, message: String) {
@@ -41,14 +38,13 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         override fun onSuccess(result: NidProfileResponse) {
-                            intent.putExtra("name", result.profile?.name.toString())
-                            intent.putExtra("age", result.profile?.age.toString())
-                            intent.putExtra("gender", result.profile?.gender.toString())
+                            intent.putExtra("name", result?.profile?.name)
+                            intent.putExtra("gender", result?.profile?.gender)
+                            intent.putExtra("age", result?.profile?.age)
                             startActivity(intent)
                         }
 
                     })
-                    startActivity(intent)
                 }
                 override fun onError(errorCode: Int, message: String) {
                     onFailure(errorCode, message)

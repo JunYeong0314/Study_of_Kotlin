@@ -11,39 +11,42 @@
         android:layout_height="96dp"
         android:src="@drawable/camera"
         />
-    <TableLayout
-        android:id="@+id/tl_main"
+    <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-        <TableRow>
-            <TextView
-                android:id="@+id/tl_tv_name"
-                android:layout_column="1"
-                android:text="이름"
-                android:textSize="40sp"
-                android:padding="3dip"
-                />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id="@+id/tl_tv_gender"
-                android:layout_column="1"
-                android:text="성별"
-                android:textSize="40sp"
-                android:padding="3dip"
-                />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id="@+id/tl_tv_age"
-                android:layout_column="1"
-                android:text="나이"
-                android:textSize="40sp"
-                android:padding="3dip"
-                />
-        </TableRow>
-    </TableLayout>
+        android:text="이름"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:id="@+id/tv_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성별"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:id="@+id/tv_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나이"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원탈퇴"
+        android:textSize="40sp"
+        />
+
 
 
 </LinearLayout>

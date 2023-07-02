@@ -49,4 +49,5 @@ dependencies {
     implementation("com.navercorp.nid:oauth:5.6.0") // jdk 11
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0' //Circle ImageView
+    implementation 'org.greenrobot:eventbus:3.2.0'
 }
