@@ -10,11 +10,15 @@ class App: Application() {
         Log.e("App class", "onCreate")
         val sharedPreferenceManager = SharedPreferenceManager.getInstance(this)
         val token = sharedPreferenceManager.getToken()
+        Log.e("APP Class:Token", token)
 
-        val intent = if (token.isNotEmpty()) {
-            Intent(this, FirstActivity::class.java)
-        } else {
-            Intent(this, MainActivity::class.java)
+        var intent: Intent
+        if (token.isNotEmpty()) {
+            intent = Intent(this, FirstActivity::class.java)
+        } else if(token == ""){
+            intent = Intent(this, MainActivity::class.java)
+        }else{
+            intent = Intent(this, MainActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

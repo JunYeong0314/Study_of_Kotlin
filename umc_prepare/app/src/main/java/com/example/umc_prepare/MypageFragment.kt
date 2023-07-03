@@ -1,5 +1,7 @@
 package com.example.umc_prepare
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode
 class MypageFragment: Fragment() {
     val TAG = "MypageFragment"
     private lateinit var binding: FragmentMypageBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,26 +28,46 @@ class MypageFragment: Fragment() {
         binding = FragmentMypageBinding.inflate(layoutInflater)
 
         binding.tvLogout.setOnClickListener {
-            NaverIdLoginSDK.logout()
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("알림")
+                .setMessage("로그아웃 하시겠습니까?")
+                .setPositiveButton("네"){_, _ ->
+                    NaverIdLoginSDK.logout()
+                    requireActivity().supportFragmentManager.popBackStack()
+                    requireActivity().finish()
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                }
+                .setNegativeButton("아니요", null)
+            builder.show()
         }
         binding.tvDelete.setOnClickListener {
-            context?.let { it1 ->
-                NidOAuthLogin().callDeleteTokenApi(it1, object: OAuthLoginCallback{
-                    override fun onError(errorCode: Int, message: String) {
-                        onFailure(errorCode, message)
-                    }
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("알림")
+                .setMessage("탈퇴하시겠습니까?\n기존 회원정보 및 관련 내용이 모두 삭제됩니다")
+                .setPositiveButton("네"){_, _->
+                    NidOAuthLogin().callDeleteTokenApi(requireContext(), object: OAuthLoginCallback{
+                        override fun onError(errorCode: Int, message: String) {
+                            onFailure(errorCode, message)
+                        }
 
-                    override fun onFailure(httpStatus: Int, message: String) {
-                        Log.e(TAG, "errorCode:${NaverIdLoginSDK.getLastErrorCode().code}")
-                        Log.e(TAG, "errorDesc:${NaverIdLoginSDK.getLastErrorDescription()}")
-                    }
+                        override fun onFailure(httpStatus: Int, message: String) {
+                            Log.e(TAG, "errorCode:${NaverIdLoginSDK.getLastErrorCode().code}")
+                            Log.e(TAG, "errorDesc:${NaverIdLoginSDK.getLastErrorDescription()}")
+                        }
 
-                    override fun onSuccess() {
-                        //탈퇴 완료
-                    }
+                        override fun onSuccess() {
+                            //탈퇴 완료
+                        }
+                    })
+                    requireActivity().supportFragmentManager.popBackStack()
+                    requireActivity().finish()
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                }
+                .setNegativeButton("아니오", null)
+            builder.show()
 
-                })
-            }
         }
         return binding.root
     }
@@ -66,5 +89,6 @@ class MypageFragment: Fragment() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
+
 
 }

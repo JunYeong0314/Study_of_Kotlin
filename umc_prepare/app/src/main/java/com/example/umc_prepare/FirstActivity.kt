@@ -1,6 +1,7 @@
 package com.example.umc_prepare
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -56,12 +57,16 @@ class FirstActivity: AppCompatActivity() {
         })
     }
 
+    var backKeyPressedTime: Long = 0
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
 
-    //fragment switching
-    private fun changeFragment(fragmet: Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fl_main, fragmet)
-            .commit()
+        if(currentTime - backKeyPressedTime > 2500){
+            backKeyPressedTime = currentTime
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }else{
+            super.onBackPressed()
+            finishAffinity()
+        }
     }
 }
