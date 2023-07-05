@@ -1,0 +1,16 @@
+package com.example.firebasechat.model
+
+class Message {
+    var id: String = ""
+    var msg: String = ""
+    var userName: String = ""
+    var timeStamp: Long  = 0
+
+    constructor()
+
+    constructor(msg: String, userName: String){
+        this.msg = msg
+        this.userName = userName
+        this.timeStamp = System.currentTimeMillis()
+    }
+}
