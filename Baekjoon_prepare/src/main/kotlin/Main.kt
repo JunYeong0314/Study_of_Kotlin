@@ -3,58 +3,67 @@ import java.util.LinkedList
 import java.util.Queue
 import kotlin.concurrent.fixedRateTimer
 
-val vertical = arrayOf(2, -2, 1 , -1, 1, -1, -2, 2)
-val horizontal = arrayOf(1, -1, 2, -2, -2, 2, 1, -1)
-lateinit var resultArray: Array<Int>
-
+val dx = arrayOf(1, -1, 0, 0)
+val dy = arrayOf(0, 0, 1, -1)
+lateinit var tomato: Array<Array<Int>>
+val isArr = mutableListOf<Pair<Int, Int>>()
 
 fun main() {
-    val L = readLine()?.toInt() ?: return
-    resultArray = Array(L){ 0 }
+    val (y, x) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+    tomato = Array(x){Array(y){ 0 }}
 
-    for(i in 0 until L){
-        val n = readLine()?.toInt() ?: return
-        val chess = Array(n){Array(n){0}}
-        val (startX, startY) = readLine()?.split(" ")?.map { it.toInt() } ?: return
-        val (endX, endY) = readLine()?. split(" ")?.map { it.toInt() } ?: return
 
-        resultArray[i] = bfs(chess, startX, startY, endX, endY, n)
+    for(i in 0 until x){
+        val element = readLine()?.split(" ")?.map { it.toInt() } ?: return
+        if(element.size != y) println("element is not correct!")
+        for(j in 0 until y){
+            tomato[i][j] = element[j]
+            if(element[j] == 1) isArr.add(Pair(i, j))
+        }
     }
-    resultArray.forEach {it->
-        println(it)
-    }
+    val result = bfs(x, y)
+
+    print(result)
 }
 
-fun bfs(chess: Array<Array<Int>>, startX: Int, startY: Int, endX: Int, endY: Int, n: Int): Int{
+fun bfs(x: Int, y: Int): Int{
     val queue: Queue<Pair<Int, Int>> = LinkedList<Pair<Int, Int>>()
-    queue.offer(Pair(startX, startY))
-    chess[startX][startY] = 1
-    var cnt = 0
+    var cnt = -1
 
-    while (queue.isNotEmpty()) {
-        val queueSize = queue.size
+    for(i in 0 until isArr.size){
+        queue.offer(isArr[i])
+    }
 
-        for(i in 0 until queueSize){
-            val index = queue.poll()
-            if (index.first == endX && index.second == endY) {
-                return cnt
-            }
+    while(queue.isNotEmpty()){
+        val qSize = queue.size
 
-            for (j in 0 until 8) {
-                val curX: Int = index.first + vertical[j]
-                val curY: Int = index.second + horizontal[j]
+        for(i in 0 until qSize){
+            val cur = queue.poll()
 
-                if (isValidPosition(n, curX, curY) && chess[curX][curY] == 0) {
-                    chess[curX][curY] = 1
+            for(j in 0 until 4){
+                val curX = cur.first + dx[j]
+                val curY = cur.second + dy[j]
+
+                if(isValidIndex(curX, curY, x, y) && tomato[curX][curY] != -1 && tomato[curX][curY] != 1){
+                    tomato[curX][curY] = 1
                     queue.offer(Pair(curX, curY))
                 }
             }
         }
         cnt++
     }
-    return -1
+
+    tomato.forEach { row->
+        row.forEach { col->
+            if(col == 0){
+                cnt = -1
+            }
+        }
+    }
+
+    return cnt
 }
 
-fun isValidPosition(n: Int, x: Int, y: Int): Boolean{
-    return x in 0 until n && y in 0 until n
+fun isValidIndex(x: Int, y: Int, nx: Int, ny: Int): Boolean{
+    return x in 0 until nx && y in 0 until ny
 }
