@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MVVM_Login</string>
+    <string name="naver_client_ID">A5b5wAxBbAzuOykhVmqY</string>
+    <string name="naver_client_SECRET">3EzrtnjcYX</string>
+    <string name="NAVER">naver</string>
+</resources>
