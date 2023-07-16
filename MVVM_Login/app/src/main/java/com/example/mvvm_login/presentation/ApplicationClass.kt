@@ -9,5 +9,8 @@ import dagger.hilt.android.internal.managers.ApplicationComponentManager
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
+    override fun onCreate() {
+        super.onCreate()
+    }
 
 }

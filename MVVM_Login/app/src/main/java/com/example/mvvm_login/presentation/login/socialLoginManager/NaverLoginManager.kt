@@ -5,9 +5,16 @@ import android.util.Log
 import com.example.mvvm_login.R
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
+import dagger.Component
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
+@Module
+@InstallIn(ActivityComponent::class)
 class NaverLoginManager @Inject constructor(
     @ActivityContext private val context: Context
 ) {
@@ -15,6 +22,7 @@ class NaverLoginManager @Inject constructor(
         private set
 
     // 네이버 로그인 구현
+    @Provides
     fun naverSetOAuthLoginCallback(updateSocialTokens: (String) -> Unit){
         oAuthLoginCallback = object : OAuthLoginCallback{
             override fun onError(errorCode: Int, message: String) {
@@ -31,6 +39,7 @@ class NaverLoginManager @Inject constructor(
         }
     }
 
+    @Provides
     fun startNaverLogin(updateSocialTokens: (String) -> Unit){
         naverSetOAuthLoginCallback { updateSocialTokens(it) }
         NaverIdLoginSDK.initialize(

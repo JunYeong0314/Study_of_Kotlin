@@ -24,8 +24,6 @@ class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
-
-    @Inject
     lateinit var naverLoginManager: NaverLoginManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
