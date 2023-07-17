@@ -49,7 +49,7 @@ class LoginActivitiy: AppCompatActivity() {
             ibtnNaver.setOnClickListener {
                 PlatformManager.setPlatform(NAVER)
                 naverLoginManager.startLogin {
-                    viewModel.updateSocialToken(it)
+                    this@LoginActivitiy.viewModel.updateSocialToken(it)
                 }
             }
         }

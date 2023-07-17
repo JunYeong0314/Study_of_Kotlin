@@ -8,10 +8,7 @@ import com.example.temp.PlatformManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val naverLoginManager: NaverLoginManager
-): ViewModel() {
+class LoginViewModel: ViewModel() {
 
     private val _token = MutableLiveData<String>()
 
