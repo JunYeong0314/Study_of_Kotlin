@@ -13,5 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         Log.d("MainActivity", "onCreate")
+
     }
 }

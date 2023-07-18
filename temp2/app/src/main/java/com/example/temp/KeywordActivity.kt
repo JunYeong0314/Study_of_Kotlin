@@ -20,6 +20,7 @@ class KeywordActivity: AppCompatActivity() {
         keywordViewModel.updateUserdata()
         Log.d("KeywordActivity", "onCreate")
 
+        // 데이터 변경 감지
         keywordViewModel.userData.observe(this, Observer {
             binding.tvName.text = it.name + "님이 지원을 희망하는"
         })

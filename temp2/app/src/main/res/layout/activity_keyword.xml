@@ -1,244 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".KeywordActivity"
-    >
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".KeywordActivity">
     <data>
         <variable
             name="keywordViewModel"
             type="com.example.temp.KeywordViewModel" />
     </data>
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{keywordViewModel.userData.name}"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="직군을 선택해주세요!"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textSize="15sp"
-            android:text="*최대 3개 선택, 추후 변경 가능합니다"
-            />
+
+        <LinearLayout
+            android:id="@+id/linear_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/tb_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{keywordViewModel.userData.name}"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="직군을 선택해주세요!"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="*최대 3개 선택, 추후 변경 가능합니다"
+                android:textSize="15sp" />
+        </LinearLayout>
 
         <TableLayout
+            android:id="@+id/tb_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="424dp"
+            android:layout_weight="6"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp"
-            >
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_main">
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_steel"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="철강"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_petrochemistry"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="석유•화학"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="석유•화학"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_oil"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="정유"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_battery"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="2차전지"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="2차전지"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_semiconductor"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="반도체"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_display"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="디스플레이"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="디스플레이"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_phone"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="휴대폰"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_IT"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="IT"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="IT"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_car"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="자동차"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_shipbuild"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="조선"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="조선"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/bnt_marine"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="해운"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_FB"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="F&amp;B"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="F&amp;B"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_distribution"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="소매유통"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_build"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="건설"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="건설"
+                    android:textSize="18dp" />
             </TableRow>
+
             <TableRow
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <android.widget.Button
                     android:id="@+id/btn_leisure"
-                    android:background="@drawable/keywordbutton"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/keywordbutton"
                     android:text="호텔•여행•항공"
                     android:textSize="18dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_clothes"
-                    android:layout_marginStart="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="섬유•의류"
-                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/keywordbutton"
-                    />
+                    android:text="섬유•의류"
+                    android:textSize="18dp" />
             </TableRow>
         </TableLayout>
 
-        <android.widget.Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
-            android:text="완료"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/black"
-            android:background="@drawable/keywordbutton"
-            />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_main">
+
+            <android.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/keywordbutton"
+                android:backgroundTint="@color/black"
+                android:text="완료"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

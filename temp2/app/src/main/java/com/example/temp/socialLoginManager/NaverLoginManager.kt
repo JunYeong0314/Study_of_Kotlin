@@ -2,6 +2,7 @@ package com.example.temp.socialLoginManager
 
 import android.content.Context
 import android.util.Log
+import com.example.temp.BuildConfig
 import com.example.temp.Constants
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
@@ -16,6 +17,10 @@ import javax.inject.Inject
 class NaverLoginManager @Inject constructor(
     @ActivityContext private val context: Context
 ) {
+    companion object{
+        const val NAVER_CLIENT_ID = BuildConfig.NAVER_CLIENT_ID
+        const val NAVER_CLIENT_SECRET = BuildConfig.NAVER_CLIENT_SECRET
+    }
     lateinit var oAuthLoginCallback: OAuthLoginCallback
         private set
 
@@ -36,6 +41,8 @@ class NaverLoginManager @Inject constructor(
             }
         }
     }
+    // 실제 로그인 시작 함수
+
     fun startLogin(updateSocialToken: (String) -> Unit) {
         naverSetOAuthLoginCallback {
             Log.d("NaverLoginManager", "call back(it) : ${it}")
@@ -45,8 +52,8 @@ class NaverLoginManager @Inject constructor(
         // 초기화 작업
         NaverIdLoginSDK.initialize(
             context,
-            Constants.NAVER_CLIENT_ID,
-            Constants.NAVER_CLIENT_SECRET,
+            NAVER_CLIENT_ID,
+            NAVER_CLIENT_SECRET,
             "JYClient"
         )
         NaverIdLoginSDK.authenticate(context, oAuthLoginCallback)

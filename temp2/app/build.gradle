@@ -5,15 +5,40 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+// local.properties 파일에 추가한 값 사용
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
+    defaultConfig{
+        buildConfigField(
+                "String",
+                "NAVER_CLIENT_ID",
+                properties.getProperty("NAVER_CLIENT_ID")
+        )
+        buildConfigField(
+                "String",
+                "NAVER_CLIENT_SECRET",
+                properties.getProperty("NAVER_CLIENT_SECRET")
+        )
+        buildConfigField(
+                "String",
+                "KAKAO_NATIVE_KEY",
+                properties.getProperty("KAKAO_NATIVE_KEY")
+        )
+        // manifest용
+        manifestPlaceholders["KAKAO_NATIVE_KEY"] =
+                properties.getProperty("KAKAO_NATIVE_KEY_NO")
+    }
+
     buildFeatures{
         viewBinding = true
         dataBinding = true
+        buildConfig true
     }
-    
+
     namespace 'com.example.temp'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.temp"
         minSdk 24
@@ -23,8 +48,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
-
 
     buildTypes {
         release {
@@ -65,8 +88,11 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
-
+    // naver
     implementation 'com.navercorp.nid:oauth:5.6.0' // jdk 11
+    // kakao
+    implementation "com.kakao.sdk:v2-all:2.15.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
+
 }
 
 // Allow references to generated code
