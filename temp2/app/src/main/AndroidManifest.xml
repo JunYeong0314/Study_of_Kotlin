@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Temp"
         tools:targetApi="31">
         <activity
-            android:name=".socialLoginManager.LoginActivitiy"
+            android:name=".present.views.login.LoginActivitiy"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,8 +37,8 @@
                     android:scheme="kakao${KAKAO_NATIVE_KEY}"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".KeywordActivity"/>
+        <activity android:name=".present.views.MainActivity"/>
+        <activity android:name=".present.views.keyword.KeywordActivity"/>
     </application>
 
 </manifest>

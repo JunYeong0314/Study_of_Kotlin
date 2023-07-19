@@ -2,11 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".KeywordActivity">
+    tools:context=".present.views.keyword.KeywordActivity">
     <data>
         <variable
             name="keywordViewModel"
-            type="com.example.temp.KeywordViewModel" />
+            type="com.example.temp.present.views.keyword.KeywordViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

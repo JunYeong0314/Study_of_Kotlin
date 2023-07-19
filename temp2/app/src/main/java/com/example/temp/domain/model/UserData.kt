@@ -1,4 +1,4 @@
-package com.example.temp.data
+package com.example.temp.domain.model
 
 data class UserData(
     val name: String,

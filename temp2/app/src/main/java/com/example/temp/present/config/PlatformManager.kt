@@ -1,4 +1,4 @@
-package com.example.temp.socialLoginManager
+package com.example.temp.present.config
 
 // 플랫폼 매니저 (카카오 or 네이버 구분기능)
 object PlatformManager {

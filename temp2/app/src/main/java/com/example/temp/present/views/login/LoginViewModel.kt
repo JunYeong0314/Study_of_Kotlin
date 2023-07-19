@@ -1,4 +1,4 @@
-package com.example.temp.socialLoginManager
+package com.example.temp.present.views.login
 
 import android.util.Log
 import androidx.lifecycle.LiveData

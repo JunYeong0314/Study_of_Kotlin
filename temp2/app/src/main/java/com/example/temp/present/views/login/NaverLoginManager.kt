@@ -1,16 +1,11 @@
-package com.example.temp.socialLoginManager
+package com.example.temp.present.views.login
 
 import android.content.Context
 import android.util.Log
 import com.example.temp.BuildConfig
-import com.example.temp.Constants
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
-import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 // 네이버 로그인 기능

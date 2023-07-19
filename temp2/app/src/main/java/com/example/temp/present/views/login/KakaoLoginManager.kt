@@ -1,4 +1,4 @@
-package com.example.temp.socialLoginManager
+package com.example.temp.present.views.login
 
 import android.content.Context
 import android.util.Log

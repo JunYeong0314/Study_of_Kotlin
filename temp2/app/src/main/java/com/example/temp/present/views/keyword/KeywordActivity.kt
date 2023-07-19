@@ -1,4 +1,4 @@
-package com.example.temp
+package com.example.temp.present.views.keyword
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.temp.R
 import com.example.temp.databinding.ActivityKeywordBinding
 import dagger.hilt.android.AndroidEntryPoint
 

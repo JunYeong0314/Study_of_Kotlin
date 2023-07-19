@@ -1,11 +1,11 @@
-package com.example.temp
+package com.example.temp.present.views.keyword
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.temp.data.UserData
-import com.example.temp.socialLoginManager.PlatformManager
+import com.example.temp.domain.model.UserData
+import com.example.temp.present.config.PlatformManager
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.profile.NidProfileCallback

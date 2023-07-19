@@ -2,8 +2,10 @@ package com.example.temp
 
 import android.app.Application
 import android.util.Log
+import com.example.temp.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
+
 
 @HiltAndroidApp
 class BaseActivity: Application() {
