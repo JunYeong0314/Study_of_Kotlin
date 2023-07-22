@@ -57,16 +57,4 @@ class FirstActivity: AppCompatActivity() {
         })
     }
 
-    var backKeyPressedTime: Long = 0
-    override fun onBackPressed() {
-        val currentTime = System.currentTimeMillis()
-
-        if(currentTime - backKeyPressedTime > 2500){
-            backKeyPressedTime = currentTime
-            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
-        }else{
-            super.onBackPressed()
-            finishAffinity()
-        }
-    }
 }
