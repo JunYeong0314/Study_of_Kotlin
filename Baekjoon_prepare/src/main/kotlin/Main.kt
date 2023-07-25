@@ -1,66 +1,62 @@
-import java.util.ArrayDeque
-import java.util.Arrays
-import java.util.LinkedList
-import java.util.queue
-import java.util.queue
-import kotlin.concurrent.fixedRateTimer
+import java.util.*
 
-lateinit var map: Array<Array<Int>>
-lateinit var visited: Array<Array<Array<Boolean>>>
-val horizontal = arrayOf(1, -1, 0, 0)
-val vertical = arrayOf(0, 0, 1, -1)
+lateinit var color: Array<Int>
+lateinit var answer: Array<Boolean>
 
-fun main() {
-    val (n, m) = readLine()?.split(" ")?.map { it.toInt() } ?: return
-    map = Array(n){Array(m){ 0 }}
-    visited = Array(n){Array(m){Array(2){false}}}
+fun main() = with(System.`in`.bufferedReader()) {
+    val N = readLine()?.toInt() ?: return
+    answer = Array(N){false}
 
-    for(i in 0 until n){
-        val element = readLine()?.split("")?.map { it.toInt() } ?: return
-        for(j in 0 until m){
-            map[i][j] = element[j]
+    for(i in 0 until N){
+        val adjList: MutableMap<Int, MutableList<Int>> = mutableMapOf()
+        val (V, E) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+
+        for(j in 0 until E){
+            val (u, v) = readLine()?.split(" ")?.map { it.toInt() } ?: return
+            adjList.computeIfAbsent(u){ mutableListOf() }.add(v)
+            adjList.computeIfAbsent(v){ mutableListOf() }.add(u)
+        }
+        answer[i] = check(adjList, V, E)
+    }
+    answer.forEach { it->
+        if(it){
+            println("YES")
+        }else{
+            println("NO")
         }
     }
-
 }
 
-fun BFS(x: Int, y: Int, limitX: Int, limitY: Int): Int{
-    val queue = LinkedList<Pair<Pair<Int, Int>, Int>>()
-    var cnt = 0
-    queue.offer(Pair(Pair(y, x), 0))
-    visited[y][x] = true
+fun check(adjList: MutableMap<Int, MutableList<Int>>, V: Int, E: Int): Boolean {
+    color = Array(V + 1) { 0 }
 
-    while(queue.isNotEmpty()){
-        val curY = queue.peek().first.first
-        val curX = queue.peek().first.second
-        val ck = queue.pop().second
-
-        if(curX == limitX-1 && curY == limitY-1){
-            return cnt
-        }
-
-        for(i in 0 until queue.size){
-            for(i in 0 until 4){
-                val nY = curY + vertical[i]
-                val nX = curX + horizontal[i]
-
-                if(validPath(nX, limitX, nY, limitY)){
-                    if(ck == 0){
-
-                    }
-                }
+    for (startNode in 1..V) {
+        if (color[startNode] == 0) {
+            if (!isBipartite(adjList, startNode)) {
+                return false
             }
         }
     }
-    return -1
-
+    return true
 }
 
-fun validPath(x: Int, limitX: Int, y: Int, limitY: Int): Boolean{
-    return x in 0 until limitX && y in 0 until limitY
+fun isBipartite(adjList: MutableMap<Int, MutableList<Int>>, startNode: Int): Boolean {
+    val queue: Queue<Int> = LinkedList()
+    queue.offer(startNode)
+    color[startNode] = 1
+
+    while (queue.isNotEmpty()) {
+        val cur = queue.poll()
+
+        adjList[cur]?.forEach { nextNode ->
+            if (color[nextNode] == 0) {
+                queue.offer(nextNode)
+                color[nextNode] = color[cur] * -1
+            } else if (color[cur] + color[nextNode] != 0) {
+                return false
+            }
+        }
+    }
+    return true
 }
-
-
-
-
 
