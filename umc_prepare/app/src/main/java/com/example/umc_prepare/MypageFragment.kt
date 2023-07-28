@@ -20,6 +20,11 @@ class MypageFragment: Fragment() {
     val TAG = "MypageFragment"
     private lateinit var binding: FragmentMypageBinding
 
+    companion object{
+        const val TAG = "mayPageFragment"
+        fun newInstance(): MypageFragment = MypageFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

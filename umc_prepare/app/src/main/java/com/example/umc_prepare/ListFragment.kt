@@ -9,6 +9,11 @@ import com.example.umc_prepare.databinding.FragmentListBinding
 
 class ListFragment: Fragment() {
     private lateinit var viewBinding: FragmentListBinding
+
+    companion object{
+        const val TAG = "listFragment"
+        fun newInstance(): ListFragment = ListFragment()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

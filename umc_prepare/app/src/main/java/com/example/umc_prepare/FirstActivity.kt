@@ -18,16 +18,15 @@ class FirstActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val mainVPAdapter = MainVPAdapter(this)
-        binding.vpMain.adapter = mainVPAdapter
 
 
         binding.navBottom.setOnItemSelectedListener { item->
             when(item.itemId){
                 R.id.menu_list -> {
-                    binding.vpMain.currentItem = 0
+                    showFragment(ListFragment.newInstance(), ListFragment.TAG)
                 }
                 R.id.menu_home -> {
-                    binding.vpMain.currentItem = 1
+                    showFragment(HomeFragment.newInstance(), HomeFragment.TAG)
                 }
                 R.id.menu_mypage -> {
                     EventBus.getDefault().post(Profile(
@@ -35,26 +34,18 @@ class FirstActivity: AppCompatActivity() {
                         intent.getStringExtra("gender")?:"null",
                         intent.getStringExtra("age")?:"null"
                     ))
-                    binding.vpMain.currentItem = 2
+                    showFragment(MypageFragment.newInstance(), MypageFragment.TAG)
                 }
             }
             true
         }
 
-        binding.vpMain.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                if(position == 2){
-                    EventBus.getDefault().post(Profile(
-                        intent.getStringExtra("name")?:"null",
-                        intent.getStringExtra("gender")?:"null",
-                        intent.getStringExtra("age")?:"null"
-                    ))
-                    binding.navBottom.menu.getItem(position).isChecked = true
-                }else{
-                    binding.navBottom.menu.getItem(position).isChecked = true
-                }
-            }
-        })
+    }
+
+    private fun showFragment(fragment: Fragment, tag: String){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main, fragment, tag)
+            .commit()
     }
 
 }
