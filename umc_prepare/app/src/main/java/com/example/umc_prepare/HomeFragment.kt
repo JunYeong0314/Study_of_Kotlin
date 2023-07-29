@@ -1,6 +1,11 @@
 package com.example.umc_prepare
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,9 +40,18 @@ class HomeFragment: Fragment() {
 
         initView()
 
+        val builder = SpannableStringBuilder(binding.tvKeywordTitle.text.toString())
+        builder.setSpan(
+            ForegroundColorSpan(Color.rgb(255, 79, 110)),
+            10,
+            13,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvKeywordTitle.text = builder
+
         bottomNavigationView = requireActivity().findViewById(R.id.nav_bottom)
         binding.tvSearch.setOnClickListener {
-            showFragment(SearchFragment.newInstance(), SearchFragment.TAG)
+            showFragment(FirstSearchFragment.newInstance(), SearchFragment.TAG)
             bottomNavigationView.isGone = true
         }
         return binding.root
@@ -59,7 +73,7 @@ class HomeFragment: Fragment() {
                     R.anim.horizon_exit_front
                 )
                 .remove(this)
-                .add(R.id.fl_main, fragment, tag)
+                .add(R.id.fv_main, fragment, tag)
         transaction.addToBackStack(tag).commitAllowingStateLoss()
     }
 

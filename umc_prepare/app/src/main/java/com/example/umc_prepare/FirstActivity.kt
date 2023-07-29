@@ -44,7 +44,7 @@ class FirstActivity: AppCompatActivity() {
 
     private fun showFragment(fragment: Fragment, tag: String){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, fragment, tag)
+            .replace(R.id.fv_main, fragment, tag)
             .commit()
     }
 
