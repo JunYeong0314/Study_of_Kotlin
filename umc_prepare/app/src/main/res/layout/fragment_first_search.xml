@@ -23,6 +23,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
             app:srcCompat="@drawable/ic_back" />
 
         <RelativeLayout
@@ -34,14 +35,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:background="@drawable/ic_keyword_search_3"
+                android:paddingStart="20dp"
                 android:paddingEnd="40dp" />
 
             <ImageView
+                android:id="@+id/iv_delete"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_alignEnd="@+id/et_search"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="22dp"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/ellipse" />
         </RelativeLayout>
