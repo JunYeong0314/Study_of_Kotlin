@@ -1,6 +1,5 @@
-package com.example.seoulparkinfoex.seoulParkApi
+package com.example.seoulparkinfoex
 
-import com.example.seoulparkinfoex.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,7 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -23,7 +22,7 @@ class RetrofitApi {
         return Retrofit.Builder().client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(getOkHttpClient())
-            .baseUrl(Constants.park_BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .build()
     }
 
@@ -34,12 +33,14 @@ class RetrofitApi {
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
+            .connectTimeout(40, TimeUnit.SECONDS)
+            .readTimeout(40, TimeUnit.SECONDS)
+            .writeTimeout(40, TimeUnit.SECONDS)
             .build()
     }
-
     @Singleton
     @Provides
-    fun getSeoulParkService(retrofit: Retrofit): SeoulParkService{
-        return retrofit.create(SeoulParkService::class.java)
+    fun getChat(retrofit: Retrofit): ChatService{
+        return retrofit.create(ChatService::class.java)
     }
 }
